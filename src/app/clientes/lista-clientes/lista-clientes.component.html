@@ -1,0 +1,99 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="ml-3 text-left">
+                    <button type="submit" class="btn btn-success" (click)="openDialog();"
+                    ><i class="fa fa-plus"></i> Novo
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Lista de clientes cadastrados</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>
+                                Código
+                            </th>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                Nascimento
+                            </th>
+                            <th>
+                                Telefone
+                            </th>
+                            <th>
+                                Endereço
+                            </th>
+                            <th>
+                                Cidade/UF
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+
+
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let cliente of clientes">
+                                <td>
+                                    {{cliente.id}}
+                                </td>
+                                <td>
+                                    {{cliente.nome}} {{cliente.sobrenome}}
+                                </td>
+                                <td>
+                                    {{cliente.nascimento | mask: "d0/M0/0000"}}
+                                </td>
+                                <td>
+                                    {{cliente.celular | mask: '(00) 00000-0000'}}
+                                </td>
+                                <td>
+                                    {{cliente.rua}}, {{cliente.numero}}
+                                </td>
+                                <td>
+                                    {{cliente.cidade}} / {{cliente.uf}}
+                                </td>
+                                <td>
+                                    <i routerLink="/clientes-form/{{cliente.id}}" class="fa fa-solid fa-edit mr-2"
+                                       style="color:black; cursor: pointer"></i>
+                                    <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
+                                    <i data-toggle="modal" data-target="#modalDeletarCliente"
+                                       class="fa fa-solid fa-trash" (click)="preparaDelecao(cliente)"
+                                       style="color:red; cursor: pointer"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalDeletarCliente" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+
+                </div>
+                <div class="modal-body" *ngIf="clienteSelecionado">
+                    Desejar mesmo deletar o(a) cliente {{clienteSelecionado.nome}}?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger mr-2" (click)="deletarCliente()" data-dismiss="modal">Confirmar</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
