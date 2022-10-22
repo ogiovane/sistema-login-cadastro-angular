@@ -16,6 +16,8 @@ export class ClientesFormComponent implements OnInit {
     cliente: Cliente;
     errors: String[];
     id = this.activatedRoute.snapshot.paramMap.get('id');
+    public show = false;
+    public abrirEsconder = '+ Campos Opcionais';
 
     constructor(
         private service: ClientesService,
@@ -104,7 +106,7 @@ export class ClientesFormComponent implements OnInit {
             this.service.atualizar(this.cliente)
                 .subscribe(response => {
                     this.showNotificationSuccess('top', 'right', 3, 'Contato atualizado com sucesso!');
-                    this.closeDialog();
+                    // this.closeDialog();
                     this.router.navigate(['/lista-clientes']);
                 },
                     errorResponse => {
@@ -117,8 +119,7 @@ export class ClientesFormComponent implements OnInit {
             this.service
                 .salvar(this.cliente).subscribe(response => {
                     this.showNotificationSuccess('top', 'right', 2, 'Contato salvo com sucesso!');
-                    this.closeDialog();
-                    window.location.reload();
+                    // this.closeDialog();
                     this.router.navigate(['lista-clientes']);
 
                 },
@@ -132,6 +133,17 @@ export class ClientesFormComponent implements OnInit {
         }
 
     };
+
+    toggle() {
+        this.show = !this.show;
+
+        // CHANGE THE NAME OF THE BUTTON.
+        if (this.show) {
+            this.abrirEsconder = '- Campos Opcionais';
+        } else {
+            this.abrirEsconder = '+ Campos Opcionais';
+        }
+    }
 
 
 }

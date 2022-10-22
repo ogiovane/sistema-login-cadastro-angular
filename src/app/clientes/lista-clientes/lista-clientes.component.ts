@@ -31,7 +31,7 @@ export class ListaClientesComponent implements OnInit {
   openDialog() {
     this.dialogRef.open(ClientesFormComponent, {
       height: '750px',
-      width: '800px',
+      width: '400px',
     });
   }
 
@@ -43,8 +43,7 @@ export class ListaClientesComponent implements OnInit {
     this.service.deletar(this.clienteSelecionado)
         .subscribe(response => {
           this.showNotificationSuccess('top', 'right', 4, 'Contato deletado com sucesso!');
-          window.location.reload();
-              this.router.navigate(['lista-clientes']);
+          location.reload();
         },
             errorResponse => {
               this.errors = errorResponse.error.errors;

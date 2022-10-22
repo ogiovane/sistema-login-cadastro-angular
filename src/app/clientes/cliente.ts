@@ -2,7 +2,7 @@ export class Cliente {
     id: number;
     nome: String;
     sobrenome: String;
-    sexo: String;
+    genero: String;
     nascimento: String;
     cpf: String;
     rg: String;

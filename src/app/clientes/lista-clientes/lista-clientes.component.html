@@ -4,8 +4,12 @@
             <div class="col-md-12">
 
                 <div class="ml-3 text-left">
-                    <button type="submit" class="btn btn-success" (click)="openDialog();"
-                    ><i class="fa fa-plus"></i> Novo
+<!--                    <button type="submit" class="btn btn-success" (click)="openDialog();"-->
+<!--                    ><i class="fa fa-plus"></i> Novo-->
+<!--                    </button>-->
+
+                    <button type="submit" class="btn btn-success" routerLink="/clientes-form"
+                    ><i class="material-icons">add</i> Novo
                     </button>
                 </div>
                 <div class="card">
@@ -16,22 +20,16 @@
                         <table class="table table-hover">
                             <thead>
                             <th>
-                                Código
+                                Código Aluno
                             </th>
                             <th>
                                 Nome
                             </th>
                             <th>
-                                Nascimento
+                                Email
                             </th>
                             <th>
-                                Telefone
-                            </th>
-                            <th>
-                                Endereço
-                            </th>
-                            <th>
-                                Cidade/UF
+                                WhatsApp
                             </th>
                             <th>
                                 Ações
@@ -48,16 +46,19 @@
                                     {{cliente.nome}} {{cliente.sobrenome}}
                                 </td>
                                 <td>
-                                    {{cliente.nascimento | mask: "d0/M0/0000"}}
+                                    {{cliente.email}}
                                 </td>
+<!--                                <td>-->
+<!--                                    {{cliente.nascimento | mask: "d0/M0/0000"}}-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    {{cliente.rua}}, {{cliente.numero}}-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    {{cliente.cidade}} / {{cliente.uf}}-->
+<!--                                </td>-->
                                 <td>
                                     {{cliente.celular | mask: '(00) 00000-0000'}}
-                                </td>
-                                <td>
-                                    {{cliente.rua}}, {{cliente.numero}}
-                                </td>
-                                <td>
-                                    {{cliente.cidade}} / {{cliente.uf}}
                                 </td>
                                 <td>
                                     <i routerLink="/clientes-form/{{cliente.id}}" class="fa fa-solid fa-edit mr-2"
@@ -84,11 +85,11 @@
 
                 </div>
                 <div class="modal-body" *ngIf="clienteSelecionado">
-                    Desejar mesmo deletar o(a) cliente {{clienteSelecionado.nome}}?
+                    Desejar mesmo deletar <b>{{clienteSelecionado.nome}}</b>?
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-danger mr-2" (click)="deletarCliente()" data-dismiss="modal">Confirmar</button>
+                    <button class="btn btn-danger mr-2" (click)="deletarCliente()" data-dismiss="modal" type="button">Confirmar</button>
                     <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
