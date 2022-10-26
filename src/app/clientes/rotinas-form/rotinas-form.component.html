@@ -1,0 +1,97 @@
+<div class="main-content">
+    <div class="form-group col-md-6 mx-auto">
+        <div class="col-mx-auto">
+            <div class="card">
+                <div class="card-header card-header-danger">
+<!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
+                    <h4 class="card-title">Criar rotina de treino</h4>
+                </div>
+                <div class="card-body">
+                    <form #rotinasForm="ngForm" (ngSubmit)="onSubmit()">
+
+                        <div class="form-group">
+                            <label class="form-control-label">Nome da rotina:</label>
+                            <input type="text" class="form-control"  maxlength="40" [(ngModel)]="rotina.nome"  value="" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dataInicio" class="form-control-label" >Inicia em:</label>
+                            <input  type="date"  class="form-control" id="dataInicio" [(ngModel)]="rotina.dataInicio" value="" required>
+                        </div>
+                        <div class="form-group" id="dataValidade">
+                            <label class="form-control-label" >Termina em:</label>
+                            <input  type="date"  class="form-control" [(ngModel)]="rotina.dataTermino" value="" required>
+                        </div>
+
+<!--                        <div class="form-group">-->
+<!--                            <label for="dia_tipo"  class="form-control-label">Tipo do treino:</label>-->
+<!--                            <select name="dia_tipo" class="form-control" required>-->
+<!--                                <option value="1" selected >Dia da Semana - Ex: Segunda, Terça ...</option>-->
+<!--                                <option value="2" [defaultSelected]="">Numérico - Ex: Treino 1, Treino 2 ...</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+                        <div class="form-group">
+                            <label class="form-control-label">Objetivo</label>
+                            <select [(ngModel)]="rotina.objetivo" class="form-control" required>
+                                <option></option>
+                                <option value="1" >Hipertrofia</option>
+                                <option value="2" >Redução de Gordura</option>
+                                <option value="3" >Redução de Gordura/Hipertrofia</option>
+                                <option value="4" >Definição Muscular</option>
+                                <option value="5" >Condicionamento Físico</option>
+                                <option value="6" >Qualidade de Vida </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Dificuldade</label>
+                            <select [(ngModel)]="rotina.dificuldade" required class="form-control" >
+                                <option></option>
+                                <option value="1" >Adaptação</option>
+                                <option value="2" >Iniciante</option>
+                                <option value="3" >Intermediário</option>
+                                <option value="4" >Avançado</option>
+                            </select>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label  class="form-control-label">Obs/Instruções: <small>(Opcional)</small></label>
+                            <textarea class="form-control" type="text"  style="resize: none;" rows="3" [(ngModel)]="rotina.observacoes"></textarea>
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label  class="form-control-label">Permitir que o aluno baixe o treino em pdf?</label>-->
+<!--                            <div class="custom-control custom-radio  ">-->
+<!--                                <input class="custom-control-input" name="allowPdf" required value="true" checked    id="customCheck3" type="radio">-->
+<!--                                <label class="custom-control-label" for="customCheck3"  style="height:initial"> Sim</label>-->
+<!--                            </div>-->
+<!--                            <div class="custom-control custom-radio  ">-->
+<!--                                <input class="custom-control-input" name="allowPdf" required value="false"    id="customCheck4" type="radio">-->
+<!--                                <label class="custom-control-label" for="customCheck4"   style="height:initial"> Não</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label  class="form-control-label">Periodização:</label>-->
+<!--                            <div class="custom-control custom-checkbox  ">-->
+<!--                                <input class="custom-control-input" name="arquivar"  value="1"    id="customCheck1" type="checkbox">-->
+<!--                                <label class="custom-control-label" for="customCheck1" style="height:initial"> Retirar a rotina da tela do aluno quando ela vencer.</label>-->
+<!--                            </div>-->
+<!--                            <div class="custom-control custom-checkbox  ">-->
+<!--                                <input class="custom-control-input" name="mostrarNoInicio"  value="1"    id="customCheck2" type="checkbox">-->
+<!--                                <label class="custom-control-label" for="customCheck2"  style="height:initial"> Não exibir essa rotina para o aluno antes da data de início</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="d-flex justify-content-center">
+                            <div class="mr-1">
+                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">
+                                    <i class="fa fa-save"></i> Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="ml-3 text-left">
+
+                    <button type="submit" class="btn btn-success" routerLink="/rotinas-form"
+                    ><i class="material-icons">add</i> Nova Rotina
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Rotinas de treino - Aluno: {{id}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Nome Rotina
+                            </th>
+                            <th>
+                                Início
+                            </th>
+                            <th>
+                                Vencimento
+                            </th>
+                            <th>
+                                Objetivo
+                            </th>
+                            <th>
+                                Dificuldade
+                            </th>
+                            <th>
+                                Observações
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+
+
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let ficha of fichas">
+                                <td>
+                                    {{ficha.id}}
+                                </td>
+                                <td>
+                                    {{ficha.nome}}
+                                </td>
+                                <td>
+                                    {{ficha.dataInicio | date:'dd/MM/yyyy'}}
+                                </td>
+                                <td>
+                                    {{ficha.dataTermino | date:'dd/MM/yyyy'}}
+                                </td>
+                                <td>
+                                    {{this.objetivos[ficha.objetivo]}}
+                                </td>
+                                <td>
+                                    {{this.dificuldade[ficha.dificuldade]}}
+                                </td>
+                                <td>
+                                    {{ficha.observacoes}}
+                                </td>
+
+                                <td>
+                                    <i routerLink="" class="material-icons"
+                                       style="color:black; cursor: pointer">edit</i>
+                                    <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
+                                    <i data-toggle="modal" data-target="#modalDeletarCliente"
+                                       class="material-icons"
+                                       style="color:red; cursor: pointer">delete</i>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <div id="modalDeletarCliente" class="modal fade" role="dialog">-->
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h4>Confirmação</h4>-->
+
+<!--                </div>-->
+<!--                <div class="modal-body" *ngIf="clienteSelecionado">-->
+<!--                    Desejar mesmo deletar <b>{{clienteSelecionado.nome}}</b>?-->
+<!--                </div>-->
+
+<!--                <div class="modal-footer">-->
+<!--                    <button class="btn btn-danger mr-2" (click)="deletarCliente()" data-dismiss="modal" type="button">Confirmar</button>-->
+<!--                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+

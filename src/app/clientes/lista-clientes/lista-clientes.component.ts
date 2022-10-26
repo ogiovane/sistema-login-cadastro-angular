@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ClientesFormComponent} from '../clientes-form/clientes-form.component';
-import {Cliente} from '../cliente';
+import {Aluno} from '../aluno';
 import {ClientesService} from '../../clientes.service';
 declare var $: any;
 
@@ -12,9 +12,9 @@ declare var $: any;
   styleUrls: ['./lista-clientes.component.css']
 })
 export class ListaClientesComponent implements OnInit {
-  clientes: Cliente[] = [];
+  clientes: Aluno[] = [];
   id = this.activatedRoute.snapshot.paramMap.get('id');
-  clienteSelecionado: Cliente;
+  clienteSelecionado: Aluno;
   errors: String[];
 
   constructor(private router: Router, private dialogRef: MatDialog,
@@ -35,11 +35,11 @@ export class ListaClientesComponent implements OnInit {
     });
   }
 
-  preparaDelecao(cliente: Cliente) {
+  preparaDelecao(cliente: Aluno) {
     this.clienteSelecionado = cliente;
   }
 
-  deletarCliente(){
+  deletarCliente() {
     this.service.deletar(this.clienteSelecionado)
         .subscribe(response => {
           this.showNotificationSuccess('top', 'right', 4, 'Contato deletado com sucesso!');

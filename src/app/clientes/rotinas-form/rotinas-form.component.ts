@@ -1,47 +1,48 @@
 import {Component, OnInit} from '@angular/core';
-import {Aluno} from '../aluno';
-import {ClientesService} from '../../clientes.service';
-import {MatDialog} from '@angular/material/dialog';
-import {of} from 'rxjs';
-import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RotinasService} from '../../rotinas.service';
+import {Rotina} from '../rotina';
 
 declare var $: any;
 
 @Component({
-    selector: 'app-clientes-form',
-    templateUrl: './clientes-form.component.html',
-    styleUrls: ['./clientes-form.component.css']
+    selector: 'fichas-form',
+    templateUrl: './rotinas-form.component.html',
+    styleUrls: ['./rotinas-form.component.css']
 })
-export class ClientesFormComponent implements OnInit {
-    aluno: Aluno;
-    errors: String[];
+export class RotinasFormComponent implements OnInit {
     id = this.activatedRoute.snapshot.paramMap.get('id');
-    public show = false;
-    public abrirEsconder = '+ Campos Opcionais';
+    rotina: Rotina;
+    errors: String[];
 
     constructor(
-        private service: ClientesService,
-        private dialogRef: MatDialog,
         private activatedRoute: ActivatedRoute,
-        private router: Router)
-    {
-        this.aluno = new Aluno();
+        private rotinaService: RotinasService,
+        private router: Router,
+    ) {
+        this.rotina = new Rotina();
     }
 
     ngOnInit(): void {
-        // this.id = this.activatedRoute.snapshot.paramMap.get('id');
-        // id = params;
-        if (this.id) {
-            this.service.getClienteById(this.id)
-                .subscribe(response => this.aluno = response,
-                    error => this.aluno = new Aluno()
-                )
-        }
-
     }
 
-    closeDialog() {
-        this.dialogRef.closeAll();
+    onSubmit() {
+        if (!this.id) {
+            this.rotinaService
+                .salvar(this.rotina).subscribe(response => {
+                    this.showNotificationSuccess('top', 'right', 2, 'Rotina salva com sucesso!');
+                    // this.closeDialog();
+                    this.router.navigate(['lista-clientes']);
+
+                },
+                errorResponse => {
+                    this.errors = errorResponse.error.errors;
+                    for (const error of this.errors) {
+                        this.showNotificationError('top', 'right', error);
+                    }
+                }
+            )
+        }
     }
 
     showNotificationSuccess(from, align, color, alertMessage) {
@@ -101,50 +102,4 @@ export class ClientesFormComponent implements OnInit {
                 '</div>'
         });
     }
-
-    onSubmit() {
-        if (this.id) {
-            this.service.atualizar(this.aluno)
-                .subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 3, 'Contato atualizado com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['/lista-clientes']);
-                },
-                    errorResponse => {
-                        this.errors = errorResponse.error.errors;
-                        for (const error of this.errors) {
-                            this.showNotificationError('top', 'right', error);
-                        }
-                    })
-        } else if (!this.id) {
-            this.service
-                .salvar(this.aluno).subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 2, 'Contato salvo com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['lista-clientes']);
-
-                },
-                errorResponse => {
-                    this.errors = errorResponse.error.errors;
-                    for (const error of this.errors) {
-                        this.showNotificationError('top', 'right', error);
-                    }
-                }
-            )
-        }
-
-    };
-
-    toggle() {
-        this.show = !this.show;
-
-        // CHANGE THE NAME OF THE BUTTON.
-        if (this.show) {
-            this.abrirEsconder = '- Campos Opcionais';
-        } else {
-            this.abrirEsconder = '+ Campos Opcionais';
-        }
-    }
-
-
 }

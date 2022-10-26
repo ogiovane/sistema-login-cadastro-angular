@@ -176,6 +176,7 @@
 //      "prefix": "app"
 //    }
 //  },
+  "defaultProject": "material-dashboard-angular",
   "cli": {
     "analytics": false
   }

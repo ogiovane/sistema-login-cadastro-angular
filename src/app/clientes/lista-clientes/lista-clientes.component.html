@@ -9,7 +9,7 @@
 <!--                    </button>-->
 
                     <button type="submit" class="btn btn-success" routerLink="/clientes-form"
-                    ><i class="material-icons">add</i> Novo
+                    ><i class="material-icons">add</i> Novo Aluno
                     </button>
                 </div>
                 <div class="card">
@@ -61,12 +61,23 @@
                                     {{cliente.celular | mask: '(00) 00000-0000'}}
                                 </td>
                                 <td>
-                                    <i routerLink="/clientes-form/{{cliente.id}}" class="fa fa-solid fa-edit mr-2"
-                                       style="color:black; cursor: pointer"></i>
+                                    <i routerLink="/clientes-form/{{cliente.id}}" class="material-icons"
+                                       style="color:black; cursor: pointer">edit</i>
                                     <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
                                     <i data-toggle="modal" data-target="#modalDeletarCliente"
-                                       class="fa fa-solid fa-trash" (click)="preparaDelecao(cliente)"
-                                       style="color:red; cursor: pointer"></i>
+                                       class="material-icons" (click)="preparaDelecao(cliente)"
+                                       style="color:red; cursor: pointer">delete</i>
+
+                                       <i routerLink="/rotinas/{{cliente.id}}" class="material-icons"
+                                       style="color:black; cursor: pointer">folder_open</i>
+
+<!--                                    <a href="https://api.whatsapp.com/send?phone=55{{cliente.celular}}" target="_blank" class="fa fa-whatsapp fa-lg" style="color:darkgreen"></a>-->
+<!--                                    <i routerLink="https://api.whatsapp.com/send?phone=55{{cliente.celular}}&text=&target=blank" class="material-icons"-->
+<!--                                       style="color:black; cursor: pointer">chat</i>-->
+
+<!--                                    <a href="https://api.whatsapp.com/send?phone=55{{cliente.celular}}" target="_blank" class="fa fa-whatsapp fa-lg" style="color:darkgreen"></a>-->
+
+
                                 </td>
                             </tr>
                             </tbody>

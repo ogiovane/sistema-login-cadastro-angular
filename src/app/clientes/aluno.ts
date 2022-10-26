@@ -1,13 +1,10 @@
-export class Cliente {
+export class Aluno {
     id: number;
     nome: String;
     sobrenome: String;
     genero: String;
     nascimento: String;
-    cpf: String;
-    rg: String;
     email: String;
-    telefone: String;
     celular: String;
     cep: String;
     rua: String;
