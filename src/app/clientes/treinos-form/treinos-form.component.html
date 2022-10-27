@@ -1,0 +1,45 @@
+<div class="main-content">
+    <div class="form-group col-md-6 mx-auto">
+        <div class="col-mx-auto">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
+                    <h4 class="card-title">Novo treino - ID Ficha: {{id}}</h4>
+                </div>
+                <div class="card-body">
+                    <form #treinosForm="ngForm" (ngSubmit)="onSubmit()">
+<!--                        <input type="hidden" name="acao" value="treinodarotina">-->
+<!--                        <input type="hidden" name="tipo" value="1">-->
+<!--                        <input type="hidden" name="idRotina" value="3281459">-->
+<!--                        <input type="hidden" name="al" value="1306895">-->
+<!--                        <input type="hidden" name="idTreino" value="">-->
+                        <div class="form-group">
+
+
+                            <label class="form-control-label">Número do treino:</label>
+                            <input type="number" class="form-control" name="dia_tipo"  value="" maxlength="2" required [(ngModel)]="fichaTreino.numTreino">
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label">Nome:</label>
+                            <input type="text" name="nome" maxlength="40" class="form-control" value="" placeholder="Ex.: Hipertrofia" required [(ngModel)]="fichaTreino.nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Obs/Instruções: <small>(Opcional)</small>:</label>
+                            <textarea class="form-control" name="obs" style="max-width: 100%; min-height:100px" placeholder="Observações ou instruções para o seu aluno" [(ngModel)]="fichaTreino.observacoes"></textarea>
+                        </div>
+<!--                        <button class="btn btn-default btn-block sendBtn" type="submit">Salvar</button>-->
+                        <div class="d-flex justify-content-center">
+                            <div class="mr-1">
+                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">
+                                    <i class="fa fa-save"></i> Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterLink} from '@angular/router';
 import { RotinasComponent } from './rotinas/rotinas.component';
 import { RotinasFormComponent } from './rotinas-form/rotinas-form.component';
-import { ExerciciosFormComponent } from './exercicios-form/exercicios-form.component';
+import { TreinosFormComponent } from './treinos-form/treinos-form.component';
 
 
 
@@ -18,7 +18,7 @@ import { ExerciciosFormComponent } from './exercicios-form/exercicios-form.compo
       ListaClientesComponent,
       RotinasComponent,
       RotinasFormComponent,
-      ExerciciosFormComponent
+      TreinosFormComponent
   ],
     imports: [
         CommonModule,

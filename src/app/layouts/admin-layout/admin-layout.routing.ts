@@ -4,9 +4,8 @@ import { RotinasComponent } from 'app/clientes/rotinas/rotinas.component';
 import { ClientesFormComponent } from '../../clientes/clientes-form/clientes-form.component';
 import { ListaClientesComponent } from '../../clientes/lista-clientes/lista-clientes.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { NotificationsComponent } from '../../notifications/notifications.component';
 import {RotinasFormComponent} from '../../clientes/rotinas-form/rotinas-form.component';
-import {ExerciciosFormComponent} from '../../clientes/exercicios-form/exercicios-form.component';
+import {TreinosFormComponent} from '../../clientes/treinos-form/treinos-form.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -56,7 +55,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clientes-form/:id',     component: ClientesFormComponent },
     { path: 'lista-clientes',     component: ListaClientesComponent },
     { path: 'rotinas/:id',     component: RotinasComponent },
-    { path: 'rotinas-form',     component: RotinasFormComponent },
-    { path: 'exercicios-form',  component: ExerciciosFormComponent },
-    { path: 'notifications',  component: NotificationsComponent },
+    { path: 'rotinas/nova-rotina/:id',     component: RotinasFormComponent },
+    { path: 'novo-treino/:id',  component: TreinosFormComponent },
+    // { path: 'notifications',  component: NotificationsComponent },
 ];

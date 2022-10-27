@@ -1,42 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RotinasService} from '../../rotinas.service';
-import {Rotina} from '../rotina';
-import {Aluno} from '../aluno';
+import {FichasTreinoService} from '../../fichas-treino.service';
+import {FichaTreino} from '../ficha-treino';
 
 declare var $: any;
 
 @Component({
-    selector: 'fichas-form',
-    templateUrl: './rotinas-form.component.html',
-    styleUrls: ['./rotinas-form.component.css']
+    selector: 'exercicios-form',
+    templateUrl: './treinos-form.component.html',
+    styleUrls: ['./treinos-form.component.css']
 })
-export class RotinasFormComponent implements OnInit {
-    rotina: Rotina;
-    id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+export class TreinosFormComponent implements OnInit {
+    id = this.activatedRoute.snapshot.paramMap.get('id');
+    fichaTreino: FichaTreino;
     errors: String[];
-
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private rotinaService: RotinasService,
         private router: Router,
+        private fichaTreinoService: FichasTreinoService,
     ) {
-        this.rotina = new Rotina(this.id);
+        this.fichaTreino = new FichaTreino();
     }
 
     ngOnInit(): void {
-        // if (this.id) {
-        //     this.rotinaService.getRotinaById(this.id)
-        //         .subscribe(response => this.rotina = response,
-        //             error => this.rotina = new Rotina()
-        //         )
-        // }
+
     }
 
     onSubmit() {
-        this.rotinaService
-            .salvar(this.rotina).subscribe(response => {
+        this.fichaTreinoService
+            .salvar(this.fichaTreino).subscribe(response => {
                 this.showNotificationSuccess('top', 'right', 2, 'Rotina salva com sucesso!');
                 // this.closeDialog();
                 this.router.navigate(['rotinas/' + this.id]);
@@ -108,4 +101,5 @@ export class RotinasFormComponent implements OnInit {
                 '</div>'
         });
     }
+
 }

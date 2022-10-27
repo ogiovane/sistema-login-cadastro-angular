@@ -12,8 +12,8 @@ export const ROUTES: RouteInfo[] = [
     { path: '/lista-clientes', title: 'Lista Alunos',  icon:'library_books', class: '' },
     { path: '/clientes-form', title: 'Novo Aluno',  icon:'person', class: '' },
     { path: '/rotinas', title: 'Rotinas',  icon:'library_books', class: '' },
-    { path: '/rotinas-form', title: 'Nova rotina',  icon:'notifications', class: '' },
-    // { path: '/exercicios-form', title: 'Add Ficha',  icon:'notifications', class: '' },
+    { path: '/rotinas-form', title: 'Nova rotina',  icon:'add', class: '' },
+    { path: '/treinos-form', title: 'Novo FichaTreino',  icon:'add', class: '' },
     // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
 ];
 

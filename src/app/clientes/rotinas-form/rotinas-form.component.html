@@ -4,10 +4,12 @@
             <div class="card">
                 <div class="card-header card-header-danger">
 <!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
-                    <h4 class="card-title">Criar rotina de treino</h4>
+                    <h4 class="card-title">Criar rotina de treino {{id}}</h4>
                 </div>
                 <div class="card-body">
                     <form #rotinasForm="ngForm" (ngSubmit)="onSubmit()">
+
+<!--                        <input type="hidden" name="idCliente" value="{{id}}" [(ngModel)]="rotina.idCliente">-->
 
                         <div class="form-group">
                             <label class="form-control-label">Nome da rotina:</label>
@@ -16,18 +18,18 @@
 
                         <div class="form-group">
                             <label for="dataInicio" class="form-control-label" >Inicia em:</label>
-                            <input  type="date"  class="form-control" id="dataInicio" [(ngModel)]="rotina.dataInicio" value="" required>
+                            <input  type="date"  class="form-control" id="dataInicio" placeholder="dd/mm/yyyy" [(ngModel)]="rotina.dataInicio" value="" required>
                         </div>
                         <div class="form-group" id="dataValidade">
                             <label class="form-control-label" >Termina em:</label>
-                            <input  type="date"  class="form-control" [(ngModel)]="rotina.dataTermino" value="" required>
+                            <input  type="date"  class="form-control" placeholder="dd/mm/yyyy" [(ngModel)]="rotina.dataTermino" value="" required>
                         </div>
 
 <!--                        <div class="form-group">-->
 <!--                            <label for="dia_tipo"  class="form-control-label">Tipo do treino:</label>-->
 <!--                            <select name="dia_tipo" class="form-control" required>-->
 <!--                                <option value="1" selected >Dia da Semana - Ex: Segunda, Terça ...</option>-->
-<!--                                <option value="2" [defaultSelected]="">Numérico - Ex: Treino 1, Treino 2 ...</option>-->
+<!--                                <option value="2" [defaultSelected]="">Numérico - Ex: FichaTreino 1, FichaTreino 2 ...</option>-->
 <!--                            </select>-->
 <!--                        </div>-->
 

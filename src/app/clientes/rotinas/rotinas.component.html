@@ -5,7 +5,7 @@
 
                 <div class="ml-3 text-left">
 
-                    <button type="submit" class="btn btn-success" routerLink="/rotinas-form"
+                        <button type="submit" class="btn btn-success" routerLink="/rotinas/nova-rotina/{{id}}"
                     ><i class="material-icons">add</i> Nova Rotina
                     </button>
                 </div>
@@ -44,30 +44,33 @@
 
                             </thead>
                             <tbody>
-                            <tr *ngFor="let ficha of fichas">
+                            <tr *ngFor="let rotina of rotinas">
                                 <td>
-                                    {{ficha.id}}
+                                    {{rotina.id}}
                                 </td>
                                 <td>
-                                    {{ficha.nome}}
+                                    {{rotina.nome}}
                                 </td>
                                 <td>
-                                    {{ficha.dataInicio | date:'dd/MM/yyyy'}}
+                                    {{rotina.dataInicio}}
                                 </td>
                                 <td>
-                                    {{ficha.dataTermino | date:'dd/MM/yyyy'}}
+                                    {{rotina.dataTermino}}
                                 </td>
                                 <td>
-                                    {{this.objetivos[ficha.objetivo]}}
+                                    {{this.objetivos[rotina.objetivo]}}
                                 </td>
                                 <td>
-                                    {{this.dificuldade[ficha.dificuldade]}}
+                                    {{this.dificuldade[rotina.dificuldade]}}
                                 </td>
                                 <td>
-                                    {{ficha.observacoes}}
+                                    {{rotina.observacoes}}
                                 </td>
 
                                 <td>
+                                    <i routerLink="/novo-treino/{{rotina.id}}" class="material-icons"
+                                       style="color:black; cursor: pointer">add</i>
+
                                     <i routerLink="" class="material-icons"
                                        style="color:black; cursor: pointer">edit</i>
                                     <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->

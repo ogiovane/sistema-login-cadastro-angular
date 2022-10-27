@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Ficha } from './clientes/ficha';
-import {Aluno} from './clientes/aluno';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {Rotina} from './clientes/rotina';
 
 @Injectable({
@@ -12,21 +10,21 @@ export class RotinasService {
 
   constructor(private http: HttpClient) { }
 
-  getFichas(): Observable<Ficha[]> {
-    return this.http.get<Ficha[]>('http://localhost:8080/api/rotinas/');
+  getRotinas(id): Observable<Rotina[]> {
+    return this.http.get<Rotina[]>(`http://localhost:8080/api/rotinas/${id}`);
   }
 
   salvar(rotina: Rotina): Observable<Rotina> {
-    return this.http.post<Rotina>('http://localhost:8080/api/rotinas', rotina);
+    return this.http.post<Rotina>('http://localhost:8080/api/rotinas/', rotina);
   }
 
-  atualizar(rotina: Rotina): Observable<any> {
-    return this.http.put<Rotina>(`http://localhost:8080/api/rotinas/${rotina.id}`, rotina);
-  }
+  // atualizar(rotina: Rotina, id): Observable<any> {
+  //   return this.http.put<Rotina>(`http://localhost:8080/api/rotinas/${rotina.id}`, rotina);
+  // }
 
 
-  getFichasById(id: string): Observable<Ficha[]> {
-    return this.http.get<Ficha[]>(`http://localhost:8080/api/rotinas/${id}`);
+  getRotinaById(id: string): Observable<Rotina> {
+    return this.http.get<any>(`http://localhost:8080/api/rotinas/${id}`);
   }
 
 }
