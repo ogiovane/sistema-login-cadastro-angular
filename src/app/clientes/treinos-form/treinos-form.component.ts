@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FichasTreinoService} from '../../fichas-treino.service';
-import {FichaTreino} from '../ficha-treino';
+import {Ficha} from '../ficha';
 
 declare var $: any;
 
@@ -11,8 +11,11 @@ declare var $: any;
     styleUrls: ['./treinos-form.component.css']
 })
 export class TreinosFormComponent implements OnInit {
-    id = this.activatedRoute.snapshot.paramMap.get('id');
-    fichaTreino: FichaTreino;
+    idRotina = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    idFicha = Number(this.activatedRoute.snapshot.queryParamMap.get('idFicha'));
+
+    fichaTreino: Ficha;
+    fichas: Ficha[] = [];
     errors: String[];
 
     constructor(
@@ -20,28 +23,45 @@ export class TreinosFormComponent implements OnInit {
         private router: Router,
         private fichaTreinoService: FichasTreinoService,
     ) {
-        this.fichaTreino = new FichaTreino();
+        this.fichaTreino = new Ficha(this.idRotina);
     }
 
     ngOnInit(): void {
-
+        if (this.idRotina && this.idFicha != 0) {
+            this.fichaTreinoService.getFichaPorId(this.idFicha)
+                .subscribe(response => this.fichaTreino = response,
+                    error => this.fichaTreino = new Ficha(this.idFicha)
+                )
+        }
     }
 
     onSubmit() {
-        this.fichaTreinoService
-            .salvar(this.fichaTreino).subscribe(response => {
-                this.showNotificationSuccess('top', 'right', 2, 'Rotina salva com sucesso!');
-                // this.closeDialog();
-                this.router.navigate(['rotinas/' + this.id]);
+        if (this.idFicha != 0) {
+            this.fichaTreinoService.atualizarFicha(this.fichaTreino)
+                .subscribe(response => {
+                        this.showNotificationSuccess('top', 'right', 3, 'Rotina atualizada com sucesso!');
+                        this.router.navigate(['/lista-fichas/' + this.idRotina]);
+                        // window.history.back();
+                    },
+                    errorResponse => {
+                        this.errors = errorResponse.error.errors;
+                        for (const error of this.errors) {
+                            this.showNotificationError('top', 'right', error);
+                        }
+                    })
+        } else if (this.idFicha == 0) {
+            this.fichaTreinoService
+                .salvar(this.fichaTreino).subscribe(response => {
+                    this.showNotificationSuccess('top', 'right', 2, 'Nova ficha salva com sucesso!');
+                    window.history.back();
 
-            },
-            errorResponse => {
-                this.errors = errorResponse.error.errors;
-                for (const error of this.errors) {
-                    this.showNotificationError('top', 'right', error);
+                },
+                errorResponse => {
+                    // console.log(errorResponse)
+                    this.showNotificationError('top', 'right', 'Nº de seq. não pode ser repetida!');
                 }
-            }
-        )
+            )
+        }
     };
 
     showNotificationSuccess(from, align, color, alertMessage) {
@@ -102,4 +122,7 @@ export class TreinosFormComponent implements OnInit {
         });
     }
 
+    back() {
+        window.history.back();
+    }
 }

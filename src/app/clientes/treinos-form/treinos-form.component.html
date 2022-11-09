@@ -3,19 +3,12 @@
         <div class="col-mx-auto">
             <div class="card">
                 <div class="card-header card-header-danger">
-                    <!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
-                    <h4 class="card-title">Novo treino - ID Ficha: {{id}}</h4>
+                    <h4 class="card-title">{{ this.idRotina && this.idFicha != 0 ? 'Editar' : 'Cadastrar' }} Rotina</h4>
+<!--                    <h4 class="card-title">Nova Ficha - ID ROTINA: {{idRotina}} ID FICHA: {{idFicha}}</h4>-->
                 </div>
                 <div class="card-body">
                     <form #treinosForm="ngForm" (ngSubmit)="onSubmit()">
-<!--                        <input type="hidden" name="acao" value="treinodarotina">-->
-<!--                        <input type="hidden" name="tipo" value="1">-->
-<!--                        <input type="hidden" name="idRotina" value="3281459">-->
-<!--                        <input type="hidden" name="al" value="1306895">-->
-<!--                        <input type="hidden" name="idTreino" value="">-->
                         <div class="form-group">
-
-
                             <label class="form-control-label">Número do treino:</label>
                             <input type="number" class="form-control" name="dia_tipo"  value="" maxlength="2" required [(ngModel)]="fichaTreino.numTreino">
 
@@ -32,9 +25,19 @@
 <!--                        <button class="btn btn-default btn-block sendBtn" type="submit">Salvar</button>-->
                         <div class="d-flex justify-content-center">
                             <div class="mr-1">
-                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">
+                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2" *ngIf="this.idFicha == 0">
                                     <i class="fa fa-save"></i> Salvar
                                 </button>
+                            </div>
+                            <div class="mr-1">
+                                <button name="submit" type="submit" class="btn btn-l btn-warning mt-2" *ngIf="this.idFicha != 0">
+                                    <i class="material-icons">refresh</i> Atualizar
+                                </button>
+                            </div>
+
+                            <div class="">
+                                <button class="btn btn-l btn-light mt-2"  type="button" (click)="back()">
+                                    <i class="material-icons">arrow_back</i> Cancelar</button>
                             </div>
                         </div>
                     </form>

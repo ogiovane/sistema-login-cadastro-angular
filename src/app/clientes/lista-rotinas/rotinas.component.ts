@@ -1,45 +1,59 @@
 import {Component, OnInit} from '@angular/core';
-import {Aluno} from '../aluno';
-import {ClientesService} from '../../clientes.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
+import {RotinasService} from 'app/rotinas.service';
+import {Rotina} from '../rotina';
 
 declare var $: any;
 
 @Component({
-    selector: 'app-clientes-form',
-    templateUrl: './clientes-form.component.html',
-    styleUrls: ['./clientes-form.component.css']
+    selector: 'app-fichas',
+    templateUrl: './rotinas.component.html',
+    styleUrls: ['./rotinas.component.scss']
 })
-export class ClientesFormComponent implements OnInit {
-    aluno: Aluno;
-    errors: String[];
+export class RotinasComponent implements OnInit {
     id = this.activatedRoute.snapshot.paramMap.get('id');
-    public show = false;
-    public abrirEsconder = '+ Campos Opcionais';
+
+    rotinas: Rotina[] = [];
+    ficha: Rotina;
+    rotinaSelecionada: Rotina;
+    errors: String[];
+    idRotina;
+
+    objetivos = ['', 'Hipertrofia', 'Redução de Gordura',
+        'Redução de Gordura/Hipertrofia', 'Definição Muscular', 'Condicionamento Físico', 'Qualidade de Vida']
+
+    dificuldade = ['', 'Adaptação',
+        'Iniciante', 'Intermediário', 'Avançado']
 
     constructor(
-        private service: ClientesService,
-        private dialogRef: MatDialog,
         private activatedRoute: ActivatedRoute,
-        private router: Router) {
-        this.aluno = new Aluno();
+        private rotinasService: RotinasService,
+    ) {
     }
 
     ngOnInit(): void {
-        // this.id = this.activatedRoute.snapshot.paramMap.get('id');
-        // id = params;
-        if (this.id) {
-            this.service.getClienteById(this.id)
-                .subscribe(response => this.aluno = response,
-                    error => this.aluno = new Aluno()
-                )
-        }
-
+        this.rotinasService.getRotinas(this.id)
+            .subscribe(response => {
+                this.rotinas = response;
+            });
     }
 
-    closeDialog() {
-        this.dialogRef.closeAll();
+    preparaDelecao(rotina: Rotina) {
+        this.rotinaSelecionada = rotina;
+    }
+
+    deletarRotina() {
+        this.rotinasService.deletar(this.rotinaSelecionada)
+            .subscribe(() => {
+                    this.showNotificationSuccess('top', 'right', 4, 'Rotina deletada com sucesso!');
+                    this.ngOnInit();
+                },
+                errorResponse => {
+                    this.errors = errorResponse.error.errors;
+                    for (const error of this.errors) {
+                        this.showNotificationError('top', 'right', error);
+                    }
+                });
     }
 
     showNotificationSuccess(from, align, color, alertMessage) {
@@ -99,50 +113,4 @@ export class ClientesFormComponent implements OnInit {
                 '</div>'
         });
     }
-
-    onSubmit() {
-        if (this.id) {
-            this.service.atualizar(this.aluno)
-                .subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 3, 'Contato atualizado com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['/lista-clientes']);
-                },
-                    errorResponse => {
-                        this.errors = errorResponse.error.errors;
-                        for (const error of this.errors) {
-                            this.showNotificationError('top', 'right', error);
-                        }
-                    })
-        } else if (!this.id) {
-            this.service
-                .salvar(this.aluno).subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 2, 'Contato salvo com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['lista-clientes']);
-
-                },
-                errorResponse => {
-                    this.errors = errorResponse.error.errors;
-                    for (const error of this.errors) {
-                        this.showNotificationError('top', 'right', error);
-                    }
-                }
-            )
-        }
-
-    };
-
-    toggle() {
-        this.show = !this.show;
-
-        // CHANGE THE NAME OF THE BUTTON.
-        if (this.show) {
-            this.abrirEsconder = '- Campos Opcionais';
-        } else {
-            this.abrirEsconder = '+ Campos Opcionais';
-        }
-    }
-
-
 }

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RotinasService} from '../../rotinas.service';
 import {Rotina} from '../rotina';
-import {Aluno} from '../aluno';
 
 declare var $: any;
 
@@ -13,7 +12,8 @@ declare var $: any;
 })
 export class RotinasFormComponent implements OnInit {
     rotina: Rotina;
-    id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    id = this.activatedRoute.snapshot.queryParamMap.get('id');
+    rotinaId = this.activatedRoute.snapshot.queryParamMap.get('idRotina');
     errors: String[];
 
 
@@ -26,29 +26,48 @@ export class RotinasFormComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // if (this.id) {
-        //     this.rotinaService.getRotinaById(this.id)
-        //         .subscribe(response => this.rotina = response,
-        //             error => this.rotina = new Rotina()
-        //         )
-        // }
+        if (this.rotinaId) {
+            this.rotinaService.getRotinaById(this.rotinaId)
+                .subscribe(response => {
+                        this.rotina = response;
+                        console.log(this.rotina)
+                    },
+                    error => {
+                        console.log('OCORREU UM ERRO');
+                        // this.rotina = new Rotina(this.id)
+                    }
+                )
+        }
     }
 
     onSubmit() {
-        this.rotinaService
-            .salvar(this.rotina).subscribe(response => {
-                this.showNotificationSuccess('top', 'right', 2, 'Rotina salva com sucesso!');
-                // this.closeDialog();
-                this.router.navigate(['rotinas/' + this.id]);
+        if (this.rotinaId) {
+            this.rotinaService.atualizar(this.rotina)
+                .subscribe(response => {
+                        this.showNotificationSuccess('top', 'right', 3, 'Rotina atualizada com sucesso!');
+                        this.router.navigate(['/rotinas/' + this.id]);
+                    },
+                    errorResponse => {
+                        this.errors = errorResponse.error.errors;
+                        for (const error of this.errors) {
+                            this.showNotificationError('top', 'right', error);
+                        }
+                    })
+        } else if (!this.rotinaId) {
+            this.rotinaService
+                .salvar(this.rotina).subscribe(response => {
+                    this.showNotificationSuccess('top', 'right', 2, 'Rotina salva com sucesso!');
+                    this.router.navigate(['rotinas/' + this.id]);
 
-            },
-            errorResponse => {
-                this.errors = errorResponse.error.errors;
-                for (const error of this.errors) {
-                    this.showNotificationError('top', 'right', error);
+                },
+                errorResponse => {
+                    this.errors = errorResponse.error.errors;
+                    for (const error of this.errors) {
+                        this.showNotificationError('top', 'right', error);
+                    }
                 }
-            }
-        )
+            )
+        }
     };
 
     showNotificationSuccess(from, align, color, alertMessage) {
@@ -107,5 +126,9 @@ export class RotinasFormComponent implements OnInit {
                 '<a href="{3}" target="{4}" data-notify="url"></a>' +
                 '</div>'
         });
+    }
+
+    back(): void {
+        window.history.back();
     }
 }

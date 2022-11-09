@@ -5,7 +5,7 @@
 
                 <div class="ml-3 text-left">
 
-                        <button type="submit" class="btn btn-success" routerLink="/rotinas/nova-rotina/{{id}}"
+                        <button type="submit" class="btn btn-success" routerLink="/rotinas/rotina-form/{{id}}" [queryParams]="{id: id}"
                     ><i class="material-icons">add</i> Nova Rotina
                     </button>
                 </div>
@@ -52,10 +52,10 @@
                                     {{rotina.nome}}
                                 </td>
                                 <td>
-                                    {{rotina.dataInicio}}
+                                    {{rotina.dataInicio | date: 'dd/MM/yyyy'}}
                                 </td>
                                 <td>
-                                    {{rotina.dataTermino}}
+                                    {{rotina.dataTermino | date: 'dd/MM/yyyy'}}
                                 </td>
                                 <td>
                                     {{this.objetivos[rotina.objetivo]}}
@@ -68,15 +68,17 @@
                                 </td>
 
                                 <td>
-                                    <i routerLink="/novo-treino/{{rotina.id}}" class="material-icons"
-                                       style="color:black; cursor: pointer">add</i>
 
-                                    <i routerLink="" class="material-icons"
-                                       style="color:black; cursor: pointer">edit</i>
-                                    <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
-                                    <i data-toggle="modal" data-target="#modalDeletarCliente"
-                                       class="material-icons"
-                                       style="color:red; cursor: pointer">delete</i>
+                                    <i routerLink="/lista-fichas/{{rotina.id}}" class="material-icons mr-2"
+                                       style="color:black; cursor: pointer" matTooltip="Abrir fichas">folder_open</i>
+
+                                    <i [routerLink]="['/rotinas/rotina-form/{{id}}']" [queryParams]="{id: id, idRotina: rotina.id}" class="material-icons mr-2"
+                                    style="color:black; cursor: pointer" matTooltip="Editar">edit</i>
+
+                                    <i data-toggle="modal" data-target="#modalDeletarRotina"
+                                       class="material-icons" (click)="preparaDelecao(rotina)"
+                                    style="color:red; cursor: pointer" matTooltip="Deletar">delete</i>
+
 
                                 </td>
                             </tr>
@@ -88,24 +90,24 @@
         </div>
     </div>
 
-<!--    <div id="modalDeletarCliente" class="modal fade" role="dialog">-->
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h4>Confirmação</h4>-->
+    <div id="modalDeletarRotina" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
 
-<!--                </div>-->
-<!--                <div class="modal-body" *ngIf="clienteSelecionado">-->
-<!--                    Desejar mesmo deletar <b>{{clienteSelecionado.nome}}</b>?-->
-<!--                </div>-->
+                </div>
+                <div class="modal-body" *ngIf="rotinaSelecionada">
+                    Desejar mesmo deletar <b>{{rotinaSelecionada.nome}}</b>?
+                </div>
 
-<!--                <div class="modal-footer">-->
-<!--                    <button class="btn btn-danger mr-2" (click)="deletarCliente()" data-dismiss="modal" type="button">Confirmar</button>-->
-<!--                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+                <div class="modal-footer">
+                    <button class="btn btn-danger mr-2" (click)="deletarRotina()" data-dismiss="modal" type="button">Confirmar</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

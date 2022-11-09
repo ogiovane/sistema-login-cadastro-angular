@@ -38,45 +38,36 @@
 
                             </thead>
                             <tbody>
-                            <tr *ngFor="let cliente of clientes">
+                            <tr *ngFor="let aluno of alunos">
                                 <td>
-                                    {{cliente.id}}
+                                    {{aluno.id}}
                                 </td>
                                 <td>
-                                    {{cliente.nome}} {{cliente.sobrenome}}
+                                    {{aluno.nome}} {{aluno.sobrenome}}
                                 </td>
                                 <td>
-                                    {{cliente.email}}
-                                </td>
-<!--                                <td>-->
-<!--                                    {{cliente.nascimento | mask: "d0/M0/0000"}}-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    {{cliente.rua}}, {{cliente.numero}}-->
-<!--                                </td>-->
-<!--                                <td>-->
-<!--                                    {{cliente.cidade}} / {{cliente.uf}}-->
-<!--                                </td>-->
-                                <td>
-                                    {{cliente.celular | mask: '(00) 00000-0000'}}
+                                    {{aluno.email}}
                                 </td>
                                 <td>
-                                    <i routerLink="/clientes-form/{{cliente.id}}" class="material-icons"
-                                       style="color:black; cursor: pointer">edit</i>
+                                    {{aluno.celular | mask: '(00) 00000-0000'}}
+                                </td>
+                                <td>
+                                    <i routerLink="/rotinas/{{aluno.id}}" class="material-icons mr-2"
+                                       style="color:black; cursor: pointer" matTooltip="Abrir rotinas">folder_open</i>
+
+                                    <i routerLink="/clientes-form/{{aluno.id}}" class="material-icons  mr-2"
+                                    style="color:black; cursor: pointer" matTooltip="Editar">edit</i>
                                     <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
                                     <i data-toggle="modal" data-target="#modalDeletarCliente"
-                                       class="material-icons" (click)="preparaDelecao(cliente)"
-                                       style="color:red; cursor: pointer">delete</i>
+                                       class="material-icons" (click)="preparaDelecao(aluno)"
+                                    style="color:red; cursor: pointer" matTooltip="Deletar">delete</i>
 
-                                       <i routerLink="/rotinas/{{cliente.id}}" class="material-icons"
-                                       style="color:black; cursor: pointer">folder_open</i>
 
 <!--                                    <a href="https://api.whatsapp.com/send?phone=55{{cliente.celular}}" target="_blank" class="fa fa-whatsapp fa-lg" style="color:darkgreen"></a>-->
 <!--                                    <i routerLink="https://api.whatsapp.com/send?phone=55{{cliente.celular}}&text=&target=blank" class="material-icons"-->
 <!--                                       style="color:black; cursor: pointer">chat</i>-->
 
 <!--                                    <a href="https://api.whatsapp.com/send?phone=55{{cliente.celular}}" target="_blank" class="fa fa-whatsapp fa-lg" style="color:darkgreen"></a>-->
-
 
                                 </td>
                             </tr>
@@ -93,10 +84,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4>Confirmação</h4>
-
                 </div>
-                <div class="modal-body" *ngIf="clienteSelecionado">
-                    Desejar mesmo deletar <b>{{clienteSelecionado.nome}}</b>?
+                <div class="modal-body" *ngIf="alunoSelecionado">
+                    Desejar mesmo deletar <b>{{alunoSelecionado.nome}}</b>?<br>
+                    Essa ação acarretará na deleção de todos os dados e treinos do usuário.
                 </div>
 
                 <div class="modal-footer">

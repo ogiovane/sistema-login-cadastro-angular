@@ -1,14 +1,17 @@
 export class Rotina {
-    constructor(id: number) {
+    constructor(id) {
         this.idCliente = id;
     }
 
-    nome: String;
     dataInicio: String;
     dataTermino: String;
-    objetivo: String;
     dificuldade: String;
-    observacoes: String;
+    id: String;
     idCliente: number;
-    id: string;
+    nome: String;
+    objetivo: String;
+    observacoes: String;
+
 }
+
+

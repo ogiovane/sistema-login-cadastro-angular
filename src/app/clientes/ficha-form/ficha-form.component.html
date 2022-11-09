@@ -1,0 +1,200 @@
+<div class="main-content">
+    <div class="form-group col-md-10 mx-auto mt-1">
+        <div class="ml-3 text-left">
+
+            <button type="submit" class="btn btn-secondary" routerLink="/lista-fichas/{{id}}"
+            ><i class="material-icons">arrow_back</i> Voltar
+            </button>
+        </div>
+        <div class="card">
+
+
+            <div class="card-header card-header-danger">
+                <!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
+                <h4 class="card-title">{{ idItem != 0 ? 'Editar' : 'Adicionar' }} Exercício - ID Ficha: {{id}} - ID
+                    item: {{idItem}}</h4>
+            </div>
+            <div class="card-body">
+                <form #f="ngForm" (ngSubmit)="onSubmit()">
+
+                    <div class="form-group">
+                        <label class="form-control-label">Seq.:</label>
+                        <input type="number" class="form-control" name="dia_tipo" value="" maxlength="2" required
+                               [(ngModel)]="fichaItem.sequencia">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exercicio" class="form-control-label">Exercício</label>
+                        <select id="exercicio" name="exercicio" required="required" class="custom-select"
+                                [(ngModel)]="fichaItem.exercicio.id">
+                            <option *ngFor="let exercicio of exercicios"
+                                    [value]="exercicio.id">{{exercicio.nome}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="series" class="form-control-label">Séries</label>
+                        <input id="series" name="series" type="text" required="required" class="form-control"
+                               [(ngModel)]="fichaItem.series">
+                    </div>
+                    <div class="form-group">
+                        <label for="repeticoes" class="form-control-label">Repetições</label>
+                        <input id="repeticoes" name="series" type="text" class="form-control"
+                               [(ngModel)]="fichaItem.repeticoes">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="carga" class="form-control-label">Carga</label>
+                        <input id="carga" name="series" type="text" class="form-control"
+                               [(ngModel)]="fichaItem.carga">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="velocidade" class="form-control-label">Vel. C/E</label>
+                        <input id="velocidade" name="velocidade" placeholder="Ex.: 1 por 1" type="text"
+                               required="required" class="form-control" [(ngModel)]="fichaItem.velocidade">
+                    </div>
+                    <div class="form-group">
+                        <label for="intervalo" class="form-control-label">Intervalo</label>
+                        <input id="intervalo" name="intervalo" placeholder="Ex.: 40s" type="text"
+                               required="required" class="form-control" [(ngModel)]="fichaItem.intervalo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tecnica" class="form-control-label">Técnica</label>
+                        <input id="tecnica" name="tecnica" placeholder="Ex.: Falha concêntrica" type="text"
+                               required="required" class="form-control" [(ngModel)]="fichaItem.tecnica">
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <div class="mr-1">
+                            <button name="submit" type="submit" class="btn btn-l btn-success mt-2" *ngIf="!idItem">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
+                        </div>
+                        <div class="mr-1">
+                            <button name="submit" type="submit" class="btn btn-l btn-warning mt-2" *ngIf="idItem">
+                                <i class="material-icons">refresh</i> Atualizar
+                            </button>
+                        </div>
+
+                        <div class="">
+                            <button class="btn btn-l btn-light mt-2" type="button" (click)="cancelar()"
+                                    *ngIf="idItem != 0">
+                                <i class="material-icons">arrow_back</i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+        <div class="col-mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Seq.
+                        </th>
+                        <th>
+                            Exerc.
+                        </th>
+                        <th>
+                            Séries
+                        </th>
+                        <th>
+                            Rep.
+                        </th>
+                        <th>
+                            Carga
+                        </th>
+                        <th>
+                            Vel.
+                        </th>
+                        <th>
+                            Int.
+                        </th>
+                        <th>
+                            Técnica
+                        </th>
+                        <th>
+                            Ações
+                        </th>
+
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of fichaItems">
+                            <td>
+                                {{item.id}}
+                            </td>
+                            <td>
+                                {{item.sequencia}}
+                            </td>
+                            <td>
+                                {{item.exercicio["nome"]}}
+                            </td>
+                            <td>
+                                {{item.series}}
+                            </td>
+                            <td>
+                                {{item.repeticoes}}
+                            </td>
+                            <td>
+                                {{item.carga}}
+                            </td>
+                            <td>
+                                {{item.velocidade}}
+                            </td>
+                            <td>
+                                {{item.intervalo}}
+                            </td>
+                            <td>
+                                {{item.tecnica}}
+                            </td>
+                            <td>
+
+                                <i routerLink="/ficha-form/{{id}}/{{item.id}}" class="material-icons mr-2"
+                                   style="color:black; cursor: pointer"matTooltip="Editar item">edit</i>
+
+                                <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
+                                <i data-toggle="modal" data-target="#modalDeletarItem"
+                                   class="material-icons" (click)="preparaDelecao(item)"
+                                   style="color:red; cursor: pointer"matTooltip="Deletar item">delete</i>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalDeletarItem" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+
+                </div>
+                <div class="modal-body" *ngIf="itemSelecionado">
+                    Desejar mesmo deletar <b>{{itemSelecionado.exercicio["nome"]}}</b>?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger mr-2" (click)="deletarItem()" data-dismiss="modal" type="button">
+                        Confirmar
+                    </button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

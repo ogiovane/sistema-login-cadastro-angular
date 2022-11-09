@@ -1,0 +1,92 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="ml-3 text-left">
+
+                    <button type="submit" class="btn btn-success" routerLink="/cadastrar-exercicio"
+                    ><i class="material-icons">add</i> Novo Exercício
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Exercícios</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                Grupo Muscular
+                            </th>
+                            <th>
+                                Observações
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let exercicio of exercicios">
+                                <td>
+                                    {{exercicio.id}}
+                                </td>
+                                <td>
+                                    {{exercicio.nome}}
+                                </td>
+                                <td>
+                                    #{{exercicio.grupoMuscular}}
+                                </td>
+                                <td>
+                                    {{exercicio.observacao}}
+                                </td>
+
+                                <td>
+<!--                                    <i routerLink="/novo-treino/{{exercicio.id}}" class="material-icons"-->
+<!--                                       style="color:black; cursor: pointer">add</i>-->
+
+                                    <i routerLink="/cadastrar-exercicio/{{exercicio.id}}" class="material-icons"
+                                       style="color:black; cursor: pointer">edit</i>
+                                    <!--                                    <i (click)="editDialog(cliente.id)"  class="fa fa-solid fa-edit" style="color:black; cursor: pointer"></i>-->
+                                    <i data-toggle="modal" data-target="#modalDeletarExercicio"
+                                       class="material-icons" (click)="preparaDelecao(exercicio)"
+                                       style="color:red; cursor: pointer">delete</i>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div id="modalDeletarExercicio" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4>Confirmação</h4>
+
+                    </div>
+                    <div class="modal-body" *ngIf="exercicioSelecionado">
+                        Desejar mesmo deletar <b>{{exercicioSelecionado.nome}}</b>?
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-danger mr-2" (click)="deletarExercicio()" data-dismiss="modal" type="button">Confirmar</button>
+                        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+

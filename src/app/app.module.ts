@@ -11,6 +11,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgxMaskModule} from 'ngx-mask';
 import {ClientesService} from './clientes.service';
 import {ToastrModule} from 'ngx-toastr';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {ToastrModule} from 'ngx-toastr';
         RouterModule,
         AppRoutingModule,
         MatDialogModule,
+        MatTooltipModule,
         NgxMaskModule.forRoot(),
         ToastrModule.forRoot()
     ],

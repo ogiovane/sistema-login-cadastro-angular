@@ -3,8 +3,8 @@
         <div class="col-mx-auto">
             <div class="card">
                 <div class="card-header card-header-danger">
-<!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
-                    <h4 class="card-title">Criar rotina de treino {{id}}</h4>
+                    <h4 class="card-title" *ngIf="rotinaId"> Editar rotina de treino - {{rotinaId}} - Aluno: {{id}} </h4>
+                    <h4 class="card-title "*ngIf="!rotinaId">Cadastrar rotina - Aluno: {{id}} </h4>
                 </div>
                 <div class="card-body">
                     <form #rotinasForm="ngForm" (ngSubmit)="onSubmit()">
@@ -13,29 +13,29 @@
 
                         <div class="form-group">
                             <label class="form-control-label">Nome da rotina:</label>
-                            <input type="text" class="form-control"  maxlength="40" [(ngModel)]="rotina.nome"  value="" required>
+                            <input type="text" class="form-control"  maxlength="40" [(ngModel)]="rotina.nome"  value="" required name="nome">
                         </div>
 
                         <div class="form-group">
                             <label for="dataInicio" class="form-control-label" >Inicia em:</label>
-                            <input  type="date"  class="form-control" id="dataInicio" placeholder="dd/mm/yyyy" [(ngModel)]="rotina.dataInicio" value="" required>
+                            <input  type="date"  class="form-control" id="dataInicio" [(ngModel)]="rotina.dataInicio" required name="dataInicio">
                         </div>
                         <div class="form-group" id="dataValidade">
                             <label class="form-control-label" >Termina em:</label>
-                            <input  type="date"  class="form-control" placeholder="dd/mm/yyyy" [(ngModel)]="rotina.dataTermino" value="" required>
+                            <input  type="date"  class="form-control" [(ngModel)]="rotina.dataTermino" value="" required name="dataTermino">
                         </div>
 
 <!--                        <div class="form-group">-->
 <!--                            <label for="dia_tipo"  class="form-control-label">Tipo do treino:</label>-->
 <!--                            <select name="dia_tipo" class="form-control" required>-->
 <!--                                <option value="1" selected >Dia da Semana - Ex: Segunda, Terça ...</option>-->
-<!--                                <option value="2" [defaultSelected]="">Numérico - Ex: FichaTreino 1, FichaTreino 2 ...</option>-->
+<!--                                <option value="2" [defaultSelected]="">Numérico - Ex: Ficha 1, Ficha 2 ...</option>-->
 <!--                            </select>-->
 <!--                        </div>-->
 
                         <div class="form-group">
                             <label class="form-control-label">Objetivo</label>
-                            <select [(ngModel)]="rotina.objetivo" class="form-control" required>
+                            <select [(ngModel)]="rotina.objetivo" class="form-control" required name="objetivo">
                                 <option></option>
                                 <option value="1" >Hipertrofia</option>
                                 <option value="2" >Redução de Gordura</option>
@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label">Dificuldade</label>
-                            <select [(ngModel)]="rotina.dificuldade" required class="form-control" >
+                            <select [(ngModel)]="rotina.dificuldade" required class="form-control" name="dificuldade">
                                 <option></option>
                                 <option value="1" >Adaptação</option>
                                 <option value="2" >Iniciante</option>
@@ -60,7 +60,7 @@
 
                         <div class="form-group">
                             <label  class="form-control-label">Obs/Instruções: <small>(Opcional)</small></label>
-                            <textarea class="form-control" type="text"  style="resize: none;" rows="3" [(ngModel)]="rotina.observacoes"></textarea>
+                            <textarea class="form-control" type="text"  style="resize: none;" rows="3" [(ngModel)]="rotina.observacoes" name="observacoes"></textarea>
                         </div>
 <!--                        <div class="form-group">-->
 <!--                            <label  class="form-control-label">Permitir que o aluno baixe o treino em pdf?</label>-->
@@ -84,11 +84,28 @@
 <!--                                <label class="custom-control-label" for="customCheck2"  style="height:initial"> Não exibir essa rotina para o aluno antes da data de início</label>-->
 <!--                            </div>-->
 <!--                        </div>-->
+<!--                        <div class="d-flex justify-content-center">-->
+<!--                            <div class="mr-1">-->
+<!--                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">-->
+<!--                                    <i class="fa fa-save"></i> Salvar-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="d-flex justify-content-center">
                             <div class="mr-1">
-                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">
+                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2" *ngIf="!rotinaId">
                                     <i class="fa fa-save"></i> Salvar
                                 </button>
+                            </div>
+                            <div class="mr-1">
+                                <button name="submit" type="submit" class="btn btn-l btn-warning mt-2" *ngIf="rotinaId">
+                                    <i class="material-icons">refresh</i> Atualizar
+                                </button>
+                            </div>
+
+                            <div class="">
+                                <button class="btn btn-l btn-light mt-2"  type="button" (click)="back()">
+                                    <i class="material-icons">arrow_back</i> Cancelar</button>
                             </div>
                         </div>
                     </form>

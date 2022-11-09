@@ -1,0 +1,67 @@
+<div class="main-content">
+    <div class="form-group col-md-6 mx-auto">
+        <div class="col-mx-auto">
+            <div class="card">
+                <div class="card-header card-header-danger">
+                    <!--                    <h4 class="card-title">{{ fichas.id ? 'Editar' : 'Cadastrar' }} aluno</h4>-->
+                    <h4 class="card-title">{{ exercicio.id ? 'Editar' : 'Cadastrar' }} exercício</h4>
+                </div>
+                <div class="card-body">
+                    <form #treinosForm="ngForm" (ngSubmit)="onSubmit()">
+
+                        <div class="form-group">
+                            <label class="form-control-label">Nome:</label>
+                            <input type="text" name="nome" maxlength="50" class="form-control" value="" placeholder="Ex.: Supino Reto" required [(ngModel)]="exercicio.nome">
+                        </div>
+
+<!--                        <div class="form-group">-->
+<!--                            <label class="form-control-label">Grupo Muscular:</label>-->
+<!--                            <input type="text" name="grupoMuscular" maxlength="50" class="form-control" value="" placeholder="Ex.: Peitoral" required [(ngModel)]="exercicio.grupoMuscular">-->
+<!--                        </div>-->
+
+                        <div class="form-group">
+                            <label class="form-control-label">Grupo Muscular:</label>
+                            <select [(ngModel)]="exercicio.grupoMuscular" required class="form-control" name="grupoMuscular">
+                                <option></option>
+                                <option value="abdomen" >Abdômen</option>
+                                <option value="biceps" >Bíceps</option>
+                                <option value="costas" >Costas</option>
+                                <option value="coxas" >Coxas</option>
+                                <option value="ombros" >Ombros</option>
+                                <option value="pernas" >Pernas</option>
+                                <option value="gluteos" >Glúteos</option>
+                                <option value="torax" >Tórax</option>
+                                <option value="triceps" >Tríceps</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Link Vídeo:</label>
+                            <input type="text" name="link" maxlength="50" class="form-control" value="" placeholder="" required [(ngModel)]="exercicio.link">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Link Imagem:</label>
+                            <input type="text" name="imagem" maxlength="50" class="form-control" value="" placeholder="" required [(ngModel)]="exercicio.imagem">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-control-label">Observação:</label>
+                            <input type="text" name="observacao" maxlength="50" class="form-control" value="" placeholder="" required [(ngModel)]="exercicio.observacao">
+                        </div>
+
+
+                        <!--                        <button class="btn btn-default btn-block sendBtn" type="submit">Salvar</button>-->
+                        <div class="d-flex justify-content-center">
+                            <div class="mr-1">
+                                <button name="submit" type="submit" class="btn btn-l btn-success mt-2">
+                                    <i class="fa fa-save"></i> Salvar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

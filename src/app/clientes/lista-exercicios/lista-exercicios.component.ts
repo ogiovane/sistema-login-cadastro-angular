@@ -1,45 +1,42 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import {Aluno} from '../aluno';
-import {ClientesService} from '../../clientes.service';
-
+import {Exercicio} from '../exercicio';
+import {ExerciciosService} from '../../exercicios.service';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-lista-clientes',
-  templateUrl: './lista-clientes.component.html',
-  styleUrls: ['./lista-clientes.component.css']
+  selector: 'lista-exercicios',
+  templateUrl: './lista-exercicios.component.html',
+  styleUrls: ['./lista-exercicios.component.css']
 })
-export class ListaClientesComponent implements OnInit {
-  alunos: Aluno[] = [];
-  id = this.activatedRoute.snapshot.paramMap.get('id');
-  alunoSelecionado: Aluno;
+export class ListaExerciciosComponent implements OnInit {
+  exercicios: Exercicio[] = [];
+  exercicioSelecionado: Exercicio;
   errors: String[];
 
-  constructor(private router: Router, private dialogRef: MatDialog,
-              private clientesService: ClientesService,
-              private activatedRoute: ActivatedRoute) { }
+  constructor(
+      private exerciciosService: ExerciciosService,
+  ) { }
 
   ngOnInit(): void {
-   this.clientesService.getClientes()
-       .subscribe(response => {
-         this.alunos = response;
-       });
-  }
-
-  preparaDelecao(cliente: Aluno) {
-    this.alunoSelecionado = cliente;
-  }
-
-  deletarCliente() {
-    this.clientesService.deletar(this.alunoSelecionado)
+    this.exerciciosService.getAll()
         .subscribe(response => {
-          this.showNotificationSuccess('top', 'right', 4, 'Contato deletado com sucesso!');
-          // location.reload();
-          this.ngOnInit();
-        },
+          this.exercicios = response;
+        });
+  }
+
+
+  preparaDelecao(exercicio: Exercicio) {
+    this.exercicioSelecionado = exercicio;
+  }
+
+  deletarExercicio() {
+    this.exerciciosService.deletar(this.exercicioSelecionado)
+        .subscribe(() => {
+              this.showNotificationSuccess('top', 'right', 4, 'Exercício deletado com sucesso!');
+              this.ngOnInit();
+              // location.reload();
+            },
             errorResponse => {
               this.errors = errorResponse.error.errors;
               for (const error of this.errors) {
@@ -105,5 +102,7 @@ export class ListaClientesComponent implements OnInit {
           '</div>'
     });
   }
+
+
 
 }

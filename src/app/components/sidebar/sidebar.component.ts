@@ -11,10 +11,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
     { path: '/lista-clientes', title: 'Lista Alunos',  icon:'library_books', class: '' },
     { path: '/clientes-form', title: 'Novo Aluno',  icon:'person', class: '' },
-    { path: '/rotinas', title: 'Rotinas',  icon:'library_books', class: '' },
-    { path: '/rotinas-form', title: 'Nova rotina',  icon:'add', class: '' },
-    { path: '/treinos-form', title: 'Novo FichaTreino',  icon:'add', class: '' },
-    // { path: '/upgrade', title: 'Upgrade to PRO',  icon:'unarchive', class: 'active-pro' },
+    // { path: '/rotinas', title: 'Rotinas',  icon:'library_books', class: '' },
+    { path: '/lista-exercicios', title: 'Lista Exercícios',  icon:'library_books', class: '' },
+    // { path: '/rotinas-form', title: 'Nova rotina',  icon:'add', class: '' },
+    // { path: '/treinos-form', title: 'Nova Ficha',  icon:'add', class: '' },
+    { path: '/cadastrar-exercicio', title: 'Cadastrar Exercício',  icon:'add', class: '' },
 ];
 
 @Component({

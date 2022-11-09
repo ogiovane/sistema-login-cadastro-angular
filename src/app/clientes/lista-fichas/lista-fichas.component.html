@@ -1,0 +1,98 @@
+<div class="main-content">
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="ml-3 text-left">
+                    <button type="submit" class="btn btn-success" routerLink="/novo-treino/{{idRotina}}" [queryParams]="{idFicha: 0}"
+                    ><i class="material-icons">add</i> Nova Ficha
+                    </button>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Lista de Fichas do Aluno - ID Rotina: {{idRotina}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <th>
+                                ID Ficha
+                            </th>
+                            <th>
+                                Número Seq.
+                            </th>
+                            <th>
+                                Nome
+                            </th>
+                            <th>
+                                Observações
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let ficha of fichas">
+                                <td>
+                                    {{ficha.id}}
+                                </td>
+                                <td>
+                                    {{ficha.numTreino}}
+                                </td>
+                                <td>
+                                    {{ficha.nome}}
+                                </td>
+                                <td>
+                                    {{ficha.observacoes}}
+                                </td>
+                                <td>
+<!--                                    <i routerLink="/ficha-form/{{ficha.id}}" class="material-icons"-->
+<!--                                       style="color:black; cursor: pointer" matTooltip="Abrir rotinas">folder_open</i>-->
+
+                                    <i routerLink="/ficha-form/{{ficha.id}}" class="material-icons mr-2"
+                                       style="color:black; cursor: pointer" matTooltip="Add exercícios">add</i>
+
+                                    <i routerLink="/novo-treino/{{idRotina}}" [queryParams]="{idFicha: ficha.id}" class="material-icons mr-2"
+                                       style="color:black; cursor: pointer" matTooltip="Editar">edit</i>
+
+                                    <i data-toggle="modal" data-target="#modalDeletarFicha"
+                                       class="material-icons" (click)="preparaDelecao(ficha)"
+                                       style="color:red; cursor: pointer" matTooltip="Deletar">delete</i>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalDeletarFicha" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Confirmação</h4>
+
+                </div>
+                <div class="modal-body" *ngIf="fichaSelecionada">
+                    Desejar mesmo deletar <b>{{fichaSelecionada.nome}}</b>?
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger mr-2" (click)="deletarFicha()" data-dismiss="modal" type="button">Confirmar</button>
+                    <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

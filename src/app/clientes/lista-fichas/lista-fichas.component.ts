@@ -1,45 +1,52 @@
 import {Component, OnInit} from '@angular/core';
-import {Aluno} from '../aluno';
-import {ClientesService} from '../../clientes.service';
-import {MatDialog} from '@angular/material/dialog';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Ficha} from '../ficha';
+import {ActivatedRoute} from '@angular/router';
+import {FichasTreinoService} from '../../fichas-treino.service';
 
 declare var $: any;
 
 @Component({
-    selector: 'app-clientes-form',
-    templateUrl: './clientes-form.component.html',
-    styleUrls: ['./clientes-form.component.css']
+    selector: 'lista-fichas',
+    templateUrl: './lista-fichas.component.html',
+    styleUrls: ['./lista-fichas.component.css']
 })
-export class ClientesFormComponent implements OnInit {
-    aluno: Aluno;
+export class ListaFichasComponent implements OnInit {
+    fichas: Ficha[] = [];
+    idRotina = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     errors: String[];
-    id = this.activatedRoute.snapshot.paramMap.get('id');
-    public show = false;
-    public abrirEsconder = '+ Campos Opcionais';
+    fichaSelecionada: Ficha;
+
 
     constructor(
-        private service: ClientesService,
-        private dialogRef: MatDialog,
+        private fichasTreinoService: FichasTreinoService,
         private activatedRoute: ActivatedRoute,
-        private router: Router) {
-        this.aluno = new Aluno();
+    ) {
     }
 
     ngOnInit(): void {
-        // this.id = this.activatedRoute.snapshot.paramMap.get('id');
-        // id = params;
-        if (this.id) {
-            this.service.getClienteById(this.id)
-                .subscribe(response => this.aluno = response,
-                    error => this.aluno = new Aluno()
-                )
-        }
-
+        this.fichasTreinoService.getFichasByRotina(this.idRotina)
+            .subscribe(response => {
+                this.fichas = response;
+            });
     }
 
-    closeDialog() {
-        this.dialogRef.closeAll();
+    preparaDelecao(ficha: Ficha) {
+        this.fichaSelecionada = ficha;
+    }
+
+    deletarFicha() {
+        this.fichasTreinoService.deletar(this.fichaSelecionada)
+            .subscribe(response => {
+                    this.showNotificationSuccess('top', 'right', 4, 'Ficha deletada com sucesso!');
+                    // location.reload();
+                    this.ngOnInit();
+                },
+                errorResponse => {
+                    this.errors = errorResponse.error.errors;
+                    for (const error of this.errors) {
+                        this.showNotificationError('top', 'right', error);
+                    }
+                });
     }
 
     showNotificationSuccess(from, align, color, alertMessage) {
@@ -99,50 +106,5 @@ export class ClientesFormComponent implements OnInit {
                 '</div>'
         });
     }
-
-    onSubmit() {
-        if (this.id) {
-            this.service.atualizar(this.aluno)
-                .subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 3, 'Contato atualizado com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['/lista-clientes']);
-                },
-                    errorResponse => {
-                        this.errors = errorResponse.error.errors;
-                        for (const error of this.errors) {
-                            this.showNotificationError('top', 'right', error);
-                        }
-                    })
-        } else if (!this.id) {
-            this.service
-                .salvar(this.aluno).subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 2, 'Contato salvo com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['lista-clientes']);
-
-                },
-                errorResponse => {
-                    this.errors = errorResponse.error.errors;
-                    for (const error of this.errors) {
-                        this.showNotificationError('top', 'right', error);
-                    }
-                }
-            )
-        }
-
-    };
-
-    toggle() {
-        this.show = !this.show;
-
-        // CHANGE THE NAME OF THE BUTTON.
-        if (this.show) {
-            this.abrirEsconder = '- Campos Opcionais';
-        } else {
-            this.abrirEsconder = '+ Campos Opcionais';
-        }
-    }
-
-
 }
+

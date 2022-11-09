@@ -1,46 +1,67 @@
 import {Component, OnInit} from '@angular/core';
-import {Aluno} from '../aluno';
-import {ClientesService} from '../../clientes.service';
-import {MatDialog} from '@angular/material/dialog';
+import {Exercicio} from '../exercicio';
+import {ExerciciosService} from '../../exercicios.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 declare var $: any;
 
 @Component({
-    selector: 'app-clientes-form',
-    templateUrl: './clientes-form.component.html',
-    styleUrls: ['./clientes-form.component.css']
+    selector: 'exercicio-form',
+    templateUrl: './exercicio-form.component.html',
+    styleUrls: ['./exercicio-form.component.css']
 })
-export class ClientesFormComponent implements OnInit {
-    aluno: Aluno;
+export class ExercicioFormComponent implements OnInit {
+    exercicio: Exercicio;
     errors: String[];
     id = this.activatedRoute.snapshot.paramMap.get('id');
-    public show = false;
-    public abrirEsconder = '+ Campos Opcionais';
 
     constructor(
-        private service: ClientesService,
-        private dialogRef: MatDialog,
+        private service: ExerciciosService,
         private activatedRoute: ActivatedRoute,
-        private router: Router) {
-        this.aluno = new Aluno();
+        private router: Router
+    ) {
+        this.exercicio = new Exercicio();
     }
 
     ngOnInit(): void {
-        // this.id = this.activatedRoute.snapshot.paramMap.get('id');
-        // id = params;
         if (this.id) {
-            this.service.getClienteById(this.id)
-                .subscribe(response => this.aluno = response,
-                    error => this.aluno = new Aluno()
+            this.service.getById(this.id)
+                // tslint:disable-next-line:no-shadowed-variable
+                .subscribe(response => this.exercicio = response,
+                    error => this.exercicio = new Exercicio()
                 )
         }
-
     }
 
-    closeDialog() {
-        this.dialogRef.closeAll();
-    }
+    onSubmit() {
+        if (this.id) {
+            this.service.atualizar(this.exercicio).subscribe(() => {
+                this.showNotificationSuccess('top', 'right', 3, 'Exercício atualizado com sucesso!');
+                this.router.navigate(['/lista-exercicios']);
+            }, errorResponse => {
+                this.errors = errorResponse.error.errors;
+                for (const error of this.errors) {
+                    this.showNotificationError('top', 'right', error);
+                }
+            })
+        } else if (!this.id) {
+            this.service
+                .salvar(this.exercicio).subscribe(() => {
+                    this.showNotificationSuccess('top', 'right', 2, 'Exercício salvo com sucesso!');
+                    // this.closeDialog();
+                    this.router.navigate(['/lista-exercicios']);
+                    // window.history.back();
+
+                },
+                errorResponse => {
+                    this.errors = errorResponse.error.errors;
+                    for (const error of this.errors) {
+                        this.showNotificationError('top', 'right', error);
+                    }
+                }
+            )
+        }
+    };
 
     showNotificationSuccess(from, align, color, alertMessage) {
         const type = ['', 'info', 'success', 'warning', 'danger'];
@@ -99,50 +120,4 @@ export class ClientesFormComponent implements OnInit {
                 '</div>'
         });
     }
-
-    onSubmit() {
-        if (this.id) {
-            this.service.atualizar(this.aluno)
-                .subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 3, 'Contato atualizado com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['/lista-clientes']);
-                },
-                    errorResponse => {
-                        this.errors = errorResponse.error.errors;
-                        for (const error of this.errors) {
-                            this.showNotificationError('top', 'right', error);
-                        }
-                    })
-        } else if (!this.id) {
-            this.service
-                .salvar(this.aluno).subscribe(response => {
-                    this.showNotificationSuccess('top', 'right', 2, 'Contato salvo com sucesso!');
-                    // this.closeDialog();
-                    this.router.navigate(['lista-clientes']);
-
-                },
-                errorResponse => {
-                    this.errors = errorResponse.error.errors;
-                    for (const error of this.errors) {
-                        this.showNotificationError('top', 'right', error);
-                    }
-                }
-            )
-        }
-
-    };
-
-    toggle() {
-        this.show = !this.show;
-
-        // CHANGE THE NAME OF THE BUTTON.
-        if (this.show) {
-            this.abrirEsconder = '- Campos Opcionais';
-        } else {
-            this.abrirEsconder = '+ Campos Opcionais';
-        }
-    }
-
-
 }

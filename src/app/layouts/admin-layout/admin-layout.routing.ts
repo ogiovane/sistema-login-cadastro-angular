@@ -1,11 +1,16 @@
 import { Routes } from '@angular/router';
 
-import { RotinasComponent } from 'app/clientes/rotinas/rotinas.component';
+import { RotinasComponent } from 'app/clientes/lista-rotinas/rotinas.component';
 import { ClientesFormComponent } from '../../clientes/clientes-form/clientes-form.component';
 import { ListaClientesComponent } from '../../clientes/lista-clientes/lista-clientes.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import {RotinasFormComponent} from '../../clientes/rotinas-form/rotinas-form.component';
 import {TreinosFormComponent} from '../../clientes/treinos-form/treinos-form.component';
+import {ExercicioFormComponent} from '../../clientes/exercicio-form/exercicio-form.component';
+import {ListaFichasComponent} from '../../clientes/lista-fichas/lista-fichas.component';
+import {ListaExerciciosComponent} from '../../clientes/lista-exercicios/lista-exercicios.component';
+import {FichaFormComponent} from '../../clientes/ficha-form/ficha-form.component';
+import {FichaItensComponent} from '../../clientes/ficha-itens/ficha-itens.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -55,7 +60,14 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clientes-form/:id',     component: ClientesFormComponent },
     { path: 'lista-clientes',     component: ListaClientesComponent },
     { path: 'rotinas/:id',     component: RotinasComponent },
-    { path: 'rotinas/nova-rotina/:id',     component: RotinasFormComponent },
+    { path: 'rotinas/rotina-form/:id',     component: RotinasFormComponent },
+    { path: 'rotinas/editar/:id',     component: RotinasFormComponent },
     { path: 'novo-treino/:id',  component: TreinosFormComponent },
-    // { path: 'notifications',  component: NotificationsComponent },
+    { path: 'cadastrar-exercicio',  component: ExercicioFormComponent },
+    { path: 'cadastrar-exercicio/:id',  component: ExercicioFormComponent },
+    { path: 'lista-fichas/:id',  component: ListaFichasComponent },
+    { path: 'listar-ficha/:id',  component: FichaItensComponent },
+    { path: 'lista-exercicios',  component: ListaExerciciosComponent },
+    { path: 'ficha-form/:id',  component: FichaFormComponent },
+    { path: 'ficha-form/:id/:itemid',  component: FichaFormComponent },
 ];

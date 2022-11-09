@@ -1,10 +1,11 @@
 export class Ficha {
-    nome: String;
-    dataInicio: String;
-    dataTermino: String;
-    objetivo: String;
-    dificuldade: String;
-    observacoes: String;
-    idCliente: String;
+    constructor(id: number) {
+        this.rotina = {id: id};
+    }
+
     id: String;
+    numTreino: String;
+    nome: String;
+    observacoes: String;
+    rotina: { id: number }
 }
